@@ -48,7 +48,7 @@ export const RegisterForm = () => {
 
     startTransition(() => {
       register(values)
-        .then((data: { error: string; success?: undefined } | { success: boolean; redirectUrl?: string; error?: undefined }) => {
+        .then((data) => {
           if (data.error) {
             setError(data.error);
           } else if (data.success && data.redirectUrl) {
