@@ -71,16 +71,7 @@ export function MangaChapters({ mangaId }: { mangaId: string }) {
                             <Link href={`/manga-chapters/${mangaId}/chapters/${chapter.number}`} className="flex justify-between items-center text-white hover:text-blue-400">
                                 <span>Chapter {chapter.number}: {chapter.title}</span>
                                 <span className="text-sm text-gray-400">{new Date(chapter.createdAt).toLocaleDateString()}</span>
-                                <div> </div>
                             </Link>
-                           <div> <Button 
-                                        variant="destructive"
-                                        size="sm"
-                                        onClick={() => handleDelete(chapter.id)}
-                                    >
-                                        Delete Chapter
-                                    </Button>
-                                    </div>
                         </li>
                     ))}
                 </ul>
