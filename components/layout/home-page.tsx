@@ -89,7 +89,7 @@ export function MangaGrid() {
                                     className="rounded-t-lg"
                                     onError={(e) => {
                                         console.error(`Failed to load image for ${manga.title}:`, manga.mangacover);
-                                        e.currentTarget.src = '/fallback-image.jpg'; // Replace with your fallback image path
+                                        e.currentTarget.src ="C:\Users\kirlu\Downloads\FIVESTARPROMOTRANSPARENT.png"; // Replace with your fallback image path
                                     }}
                                 />
                             </div>
