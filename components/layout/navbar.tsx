@@ -35,7 +35,7 @@ export const Navbar =  () => {
       <div className="flex items-center space-x-4">
         <Link href="/" className="flex items-center space-x-2">
           {/* <Image src={logo} alt="Logo" width={40} height={40} /> */}
-          LOGO
+          TIKOMIC
         </Link>
 
       </div>
