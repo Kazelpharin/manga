@@ -72,7 +72,7 @@ export function MangaGrid() {
         <div className="container mx-auto px-4 py-8">
             <div className="h-64 mb-8 bg-gray-700 rounded-lg overflow-hidden">
                 <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">
-                    <img src="https://storage.ko-fi.com/cdn/useruploads/display/bb75f45e-d4ac-462e-93ab-0825e81c100c_5spromopng.png" width="100%"/>
+                    <img src="https://storage.ko-fi.com/cdn/useruploads/display/bb75f45e-d4ac-462e-93ab-0825e81c100c_5spromopng.png" width="100%" height="20vh"/>
                 </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
