@@ -114,7 +114,9 @@ export function MangaGrid() {
                         </button>
                     )}
                 </div>
-            )}
+            )}<footer background-color="light gray"><h2>Tikomic</h2>
+                    <p> elpharinkaz@gmail.com </p>
+            </footer>
         </div>
     );
 }

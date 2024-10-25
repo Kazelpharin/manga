@@ -1,3 +1,4 @@
+import { PaddingIcon } from "@radix-ui/react-icons";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -58,7 +59,10 @@ const config: Config = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+			footer: {
+				
+			}
   		}
   	}
   },
