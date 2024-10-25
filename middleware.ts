@@ -4,35 +4,33 @@ import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
-  publicRoutes,
+  isPublicRoute,
 } from "@/routes";
 
 const { auth } = NextAuth(authConfig);
 
-export default auth((req, ctx) => {
+export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-
-  // Allow public routes to be accessed without authentication
-  if (isPublicRoute) {
-    return;
-  }
-
-  // Skip API auth routes
   if (isApiAuthRoute) {
     return;
   }
 
-  // If on an auth route (e.g., /login) and logged in, redirect to default page
-  if (isAuthRoute && isLoggedIn) {
-    return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+  const isRoutePublic = isPublicRoute(nextUrl.pathname);
+  if (isRoutePublic) {
+    return;
   }
 
-  // If not logged in and trying to access a protected route, redirect to login
+  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  if (isAuthRoute) {
+    if (isLoggedIn) {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+    return;
+  }
+
   if (!isLoggedIn) {
     let callbackUrl = nextUrl.pathname;
     if (nextUrl.search) {
@@ -45,10 +43,9 @@ export default auth((req, ctx) => {
     );
   }
 
-  // Allow access if the user is authenticated
   return;
 });
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
