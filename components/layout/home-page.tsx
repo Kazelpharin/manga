@@ -72,7 +72,7 @@ export function MangaGrid() {
         <div className="container mx-auto px-4 py-8">
             <div className="h-64 mb-8 bg-gray-700 rounded-lg overflow-hidden">
                 <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">
-                    <img src="C:\Users\kirlu\Documents\Webtoon Projects\gamapgntuber\DCM PROMO HD.png"/>
+                    <img src="https://i.pinimg.com/564x/2a/10/f7/2a10f7067f3ac4083beef3230d2e2f0c.jpg"/>
                 </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
