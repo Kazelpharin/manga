@@ -14,7 +14,7 @@ import { SessionProvider } from "next-auth/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "manga app",
+  title: "Tikomic",
   description: "manga app",
 };
 
