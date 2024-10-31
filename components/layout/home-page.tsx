@@ -73,7 +73,7 @@ export function MangaGrid() {
     <div className="h-64 mb-8 bg-gray-700 rounded-lg overflow-hidden">
         <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">
             <img 
-                src="https://t.ly/07XZy" 
+                src="t.ly/wGYhs" 
                 className="w-full h-full object-cover"
                 alt="A windmill in the middle of a grassy landscape at night"
             />
