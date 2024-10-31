@@ -72,7 +72,7 @@ export function MangaGrid() {
         <div className="container mx-auto px-4 py-8">
             <div className="h-64 mb-8 bg-gray-700 rounded-lg overflow-hidden">
                 <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">
-                    <img src="https://t.ly/07XZy" width="100%" height="100%" alt= "A windmill in the middle of a grassy lamdscape at night."/>
+                    <img src="https://t.ly/07XZy" width="100%" height="100vh" alt= "A windmill in the middle of a grassy lamdscape at night."/>
                 </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
