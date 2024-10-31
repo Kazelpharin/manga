@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
     
     // Create chapter entry
     const chapter = await prisma.mangaChapter.create({
-      data: {
+      data: { 
         number: chapterNumber,
         title: chapterTitle || '',
         pages: chapterPagePaths,
