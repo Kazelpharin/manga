@@ -73,7 +73,7 @@ export function MangaGrid() {
     <div className="h-64 mb-8 bg-gray-700 rounded-lg overflow-hidden">
         <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">
             <img 
-                src="t.ly/wGYhs" 
+                src="https://t.ly/RVNVl" 
                 className="w-full h-full object-cover"
                 alt="A windmill in the middle of a grassy landscape at night"
             />
@@ -94,7 +94,7 @@ export function MangaGrid() {
                                     className="rounded-t-lg"
                                     onError={(e) => {
                                         console.error(`Failed to load image for ${manga.title}:`, manga.mangacover);
-                                        e.currentTarget.src ="t.ly/JOt-V"; // Replace with your fallback image path
+                                        e.currentTarget.src ="https://t.ly/07XZy"; // Replace with your fallback image path
                                     }}
                                 />
                             </div>
