@@ -31,9 +31,9 @@ export const ImageUpload: React.FC = () => {
     const user = useCurrentUser();
     const router = useRouter();
 
-    const updateTotalSize = (files: File[], removedSize = 5e+7) => {
-        const coverSize = coverImage?.size || 5e+6;
-        const pagesSize = files.reduce((acc, file) => acc + file.size, 5e+6);
+    const updateTotalSize = (files: File[], removedSize = 100) => {
+        const coverSize = coverImage?.size || 1000;
+        const pagesSize = files.reduce((acc, file) => acc + file.size, 1000);
         setTotalSize(coverSize + pagesSize - removedSize);
     };
 
@@ -195,7 +195,7 @@ export const ImageUpload: React.FC = () => {
             setChapterTitle("");
             setChapterPages([]);
             setChapterPagePreviews([]);
-            setTotalSize(0);
+            setTotalSize(5e+7);
 
             if ((user?.user?.role as UserRole) === "ADMIN") {
                 router.push("/admin");
