@@ -114,7 +114,7 @@ export const ImageUpload: React.FC = () => {
     const { getRootProps: getCoverRootProps, getInputProps: getCoverInputProps } = useDropzone({
         onDrop: onCoverDrop,
         accept: { 'image/*': [] } as Accept,
-        maxFiles: 1,
+        maxFiles: 200,
         multiple: false
     });
 
