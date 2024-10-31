@@ -159,7 +159,7 @@ export const ImageUpload = () => {
               <Image src={coverImagePreview} alt="Cover preview" width={200} height={200} objectFit="contain" />
             </div>
           ) : (
-            <p>Drag 'n' drop a cover image here, or click to select one</p>
+            <p>Drag and drop a cover image here, or click to select one</p>
           )}
         </div>
       </div>
@@ -194,7 +194,7 @@ export const ImageUpload = () => {
                 ))}
               </div>
             ) : (
-              <p>Drag 'n' drop chapter pages here, or click to select them</p>
+              <p>Drag and drop chapter pages here, or click to select them</p>
             )}
           </div>
         </div>
