@@ -13,7 +13,7 @@ import { X, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { UserRole } from "@prisma/client";
 
-const MAX_TOTAL_SIZE_MB = 20; // Maximum total size in MB
+const MAX_TOTAL_SIZE_MB = 80; // Maximum total size in MB
 
 export const ImageUpload: React.FC = () => {
     const [title, setTitle] = useState("");
