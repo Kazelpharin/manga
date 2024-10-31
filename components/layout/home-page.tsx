@@ -75,7 +75,7 @@ export function MangaGrid() {
             <img 
                 src="https://t.ly/RVNVl" 
                 className="w-full h-full object-cover"
-                alt="A windmill in the middle of a grassy landscape at night"
+                alt="A windmill in the middle of a grassy landscape at night."
             />
         </div>
     </div>
