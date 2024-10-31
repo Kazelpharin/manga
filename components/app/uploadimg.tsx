@@ -13,6 +13,54 @@ import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { UserRole } from "@prisma/client";
 
+const compressImage = async (file: File, maxSizeMB: number = 1, maxWidthOrHeight: number = 1024): Promise<File | Blob> => {
+  const image = document.createElement('img');
+  const reader = new FileReader();
+
+  // Load the image file into an HTMLImageElement
+  reader.readAsDataURL(file);
+  const dataUrl = await new Promise<string>((resolve, reject) => {
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+  });
+
+  image.src = dataUrl;
+
+  await new Promise((resolve) => (image.onload = resolve));
+
+  // Calculate new dimensions while keeping aspect ratio
+  let { width, height } = image;
+  if (width > height && width > maxWidthOrHeight) {
+    height = (height * maxWidthOrHeight) / width;
+    width = maxWidthOrHeight;
+  } else if (height > width && height > maxWidthOrHeight) {
+    width = (width * maxWidthOrHeight) / height;
+    height = maxWidthOrHeight;
+  }
+
+  // Create a canvas to resize the image
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) throw new Error("Failed to get canvas context");
+
+  ctx.drawImage(image, 0, 0, width, height);
+
+  // Compress the image by reducing quality
+  const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.7); // 70% quality to reduce size
+  const compressedBlob = await (await fetch(compressedDataUrl)).blob();
+
+  // Ensure the compressed file is under the specified MB limit
+  if (compressedBlob.size / 1024 / 1024 > maxSizeMB) {
+    throw new Error("Compressed image exceeds the maximum allowed size");
+  }
+
+  return new File([compressedBlob], file.name, { type: "image/jpeg" });
+};
+
+
 export const ImageUpload: React.FC = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");

@@ -3,6 +3,13 @@ import { Storage } from '@google-cloud/storage';
 import { prisma } from '@/lib/db';
 import { getCurentUser } from '@/lib/session';
 import { NextRequest } from 'next/server';
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '50mb', // Adjust the size limit as needed
+    },
+  },
+};
 
 // Initialize Google Cloud Storage
 const storage = new Storage({
