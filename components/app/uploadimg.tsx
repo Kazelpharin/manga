@@ -9,9 +9,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { LoadingScreen } from "@/components/app/loadingScreen";
-import { X } from "lucide-react";
+import { X, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { UserRole } from "@prisma/client";
+
+const MAX_TOTAL_SIZE_MB = 20; // Maximum total size in MB
 
 export const ImageUpload: React.FC = () => {
     const [title, setTitle] = useState("");
@@ -24,13 +26,24 @@ export const ImageUpload: React.FC = () => {
     const [chapterPagePreviews, setChapterPagePreviews] = useState<string[]>([]);
     const [isUploading, setIsUploading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [totalSize, setTotalSize] = useState(0); // Total size in bytes
 
     const user = useCurrentUser();
     const router = useRouter();
 
+    const updateTotalSize = (files: File[], removedSize = 0) => {
+        const coverSize = coverImage?.size || 0;
+        const pagesSize = files.reduce((acc, file) => acc + file.size, 0);
+        setTotalSize(coverSize + pagesSize - removedSize);
+    };
+
     const validateFile = (file: File) => {
         if (!file.type.startsWith('image/')) {
             throw new Error(`File ${file.name} is not an image`);
+        }
+        const newTotalSize = totalSize + file.size;
+        if (newTotalSize / (1024 * 1024) > MAX_TOTAL_SIZE_MB) {
+            throw new Error(`Adding this file would exceed the ${MAX_TOTAL_SIZE_MB}MB limit`);
         }
         console.log(`Validating file: ${file.name}, Size: ${file.size}, Type: ${file.type}`);
         return true;
@@ -59,6 +72,7 @@ export const ImageUpload: React.FC = () => {
 
             const processedFile = await handleFile(file);
             setCoverImage(processedFile);
+            updateTotalSize([...chapterPages, processedFile]);
 
             const objectUrl = URL.createObjectURL(processedFile);
             setCoverImagePreview(objectUrl);
@@ -69,7 +83,7 @@ export const ImageUpload: React.FC = () => {
             console.error('Cover image error:', errorMessage);
             setError(errorMessage);
         }
-    }, []);
+    }, [chapterPages, totalSize]);
 
     const onChapterPagesDrop = useCallback(async (acceptedFiles: File[]) => {
         try {
@@ -80,7 +94,11 @@ export const ImageUpload: React.FC = () => {
                 acceptedFiles.map(file => handleFile(file))
             );
 
-            setChapterPages(prevPages => [...prevPages, ...processedFiles]);
+            setChapterPages(prevPages => {
+                const newPages = [...prevPages, ...processedFiles];
+                updateTotalSize(newPages);
+                return newPages;
+            });
             
             const newPreviews = processedFiles.map(file => URL.createObjectURL(file));
             setChapterPagePreviews(prevPreviews => [...prevPreviews, ...newPreviews]);
@@ -91,7 +109,7 @@ export const ImageUpload: React.FC = () => {
             console.error('Chapter pages error:', errorMessage);
             setError(errorMessage);
         }
-    }, []);
+    }, [totalSize]);
 
     const { getRootProps: getCoverRootProps, getInputProps: getCoverInputProps } = useDropzone({
         onDrop: onCoverDrop,
@@ -107,11 +125,23 @@ export const ImageUpload: React.FC = () => {
     });
 
     const removeChapterPage = (index: number) => {
-        setChapterPages(prevPages => prevPages.filter((_, i) => i !== index));
+        const removedSize = chapterPages[index].size;
+        setChapterPages(prevPages => {
+            const newPages = prevPages.filter((_, i) => i !== index);
+            updateTotalSize(newPages);
+            return newPages;
+        });
         setChapterPagePreviews(prevPreviews => {
             URL.revokeObjectURL(prevPreviews[index]);
             return prevPreviews.filter((_, i) => i !== index);
         });
+    };
+
+    const clearAllChapterPages = () => {
+        chapterPagePreviews.forEach(preview => URL.revokeObjectURL(preview));
+        setChapterPages([]);
+        setChapterPagePreviews([]);
+        updateTotalSize([]);
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -165,6 +195,7 @@ export const ImageUpload: React.FC = () => {
             setChapterTitle("");
             setChapterPages([]);
             setChapterPagePreviews([]);
+            setTotalSize(0);
 
             if ((user?.user?.role as UserRole) === "ADMIN") {
                 router.push("/admin");
@@ -191,6 +222,12 @@ export const ImageUpload: React.FC = () => {
             )}
 
             <h1 className="text-2xl font-bold mb-4">Upload Manga</h1>
+            <div className="mb-4 flex justify-between items-center">
+                <span className="text-sm text-gray-600">
+                    Total Size: {(totalSize / (1024 * 1024)).toFixed(2)}MB / {MAX_TOTAL_SIZE_MB}MB
+                </span>
+            </div>
+            
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <Label htmlFor="title">Manga Title</Label>
@@ -251,7 +288,21 @@ export const ImageUpload: React.FC = () => {
                 </div>
 
                 <div>
-                    <Label>Chapter Pages</Label>
+                    <div className="flex justify-between items-center mb-2">
+                        <Label>Chapter Pages</Label>
+                        {chapterPages.length > 0 && (
+                            <Button
+                                type="button"
+                                variant="destructive"
+                                size="sm"
+                                onClick={clearAllChapterPages}
+                                className="flex items-center gap-2"
+                            >
+                                <Trash2 size={16} />
+                                Clear All Pages
+                            </Button>
+                        )}
+                    </div>
                     <div {...getChapterRootProps()} className="border-2 border-dashed p-4 text-center cursor-pointer">
                         <input {...getChapterInputProps()} />
                         {chapterPagePreviews.length > 0 ? (
