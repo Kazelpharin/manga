@@ -89,7 +89,7 @@ export function MangaGrid() {
                                     src={manga.mangacover}
                                     alt={manga.title}
                                     fill
-                                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                                    sizes="(max-width: 3640px) 50vw, (max-width: 3768px) 33vw, (max-width: 31024px) 25vw, 20vw"
                                     style={{ objectFit: 'cover' }}
                                     className="rounded-t-lg"
                                     onError={(e) => {
