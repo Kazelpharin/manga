@@ -26,14 +26,14 @@ export const ImageUpload: React.FC = () => {
     const [chapterPagePreviews, setChapterPagePreviews] = useState<string[]>([]);
     const [isUploading, setIsUploading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [totalSize, setTotalSize] = useState(0); // Total size in bytes
+    const [totalSize, setTotalSize] = useState(10); // Total size in bytes
 
     const user = useCurrentUser();
     const router = useRouter();
 
-    const updateTotalSize = (files: File[], removedSize = 0) => {
-        const coverSize = coverImage?.size || 0;
-        const pagesSize = files.reduce((acc, file) => acc + file.size, 0);
+    const updateTotalSize = (files: File[], removedSize = 1) => {
+        const coverSize = coverImage?.size || 1;
+        const pagesSize = files.reduce((acc, file) => acc + file.size, 1);
         setTotalSize(coverSize + pagesSize - removedSize);
     };
 
