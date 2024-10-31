@@ -49,41 +49,26 @@ export function ChapterViewer({ mangaId, chapterNumber }: ChapterViewerProps) {
 
     return (
         <div className="max-w-full mx-auto">
-            <h1 className="text-2xl font-bold mb-4 text-white text-center">
-                Chapter {chapter.number}: {chapter.title}
-            </h1>
+            <h1 className="text-2xl font-bold mb-4 text-white text-center">Chapter {chapter.number}: {chapter.title}</h1>
             <div className="space-y-4">
                 {chapter.pages.map((page, index) => (
-                    <div key={index} className="w-full relative">
+                    <div key={index} className="w-full">
                         <Image
                             src={page}
                             alt={`Page ${index + 1}`}
-                            width={0}
-                            height={0}
-                            sizes="100vw"
-                            style={{
-                                width: '100%',
-                                height: 'auto',
-                            }}
-                            priority={index === 0}
-                            quality={75}
-                            unoptimized={false}
-                            loading={index === 0 ? 'eager' : 'lazy'}
+                            width={1000}
+                            height={1500}
+                            layout="responsive"
+                            className="w-full h-auto"
                         />
                     </div>
                 ))}
             </div>
             <div className="mt-8 flex justify-between px-4">
-                <Link 
-                    href={`/manga-chapters/${mangaId}/chapters/${chapterNumber - 1}`}
-                    className="text-blue-400 hover:underline"
-                >
+                <Link href={`/manga-chapters/${mangaId}/chapters/${chapterNumber - 1}`} className="text-blue-400 hover:underline">
                     Previous Chapter
                 </Link>
-                <Link 
-                    href={`/manga-chapters/${mangaId}/chapters/${chapterNumber + 1}`}
-                    className="text-blue-400 hover:underline"
-                >
+                <Link href={`/manga-chapters/${mangaId}/chapters/${chapterNumber + 1}`} className="text-blue-400 hover:underline">
                     Next Chapter
                 </Link>
             </div>

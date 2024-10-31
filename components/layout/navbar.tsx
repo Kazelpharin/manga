@@ -34,7 +34,7 @@ export const Navbar =  () => {
     <nav className="flex items-center justify-between p-4 bg-background text-foreground shadow-md">
       <div className="flex items-center space-x-4">
         <Link href="/" className="flex items-center space-x-2">
-          {/* <Image src={logo} alt="Logo" width={40} height={40} /> */}
+          {/* <Image src={logo} alt="Tikomic" width={40} height={40} /> */}
           TIKOMIC
         </Link>
 
