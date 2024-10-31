@@ -72,7 +72,7 @@ export function MangaGrid() {
         <div className="container mx-auto px-4 py-8">
             <div className="h-64 mb-8 bg-gray-700 rounded-lg overflow-hidden">
                 <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">
-                    <img src="https://storage.ko-fi.com/cdn/useruploads/display/bb75f45e-d4ac-462e-93ab-0825e81c100c_5spromopng.png" width="100%" height="100%"/>
+                    <img src="https://t.ly/07XZy" width="100%" height="100%"/>
                 </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -89,7 +89,7 @@ export function MangaGrid() {
                                     className="rounded-t-lg"
                                     onError={(e) => {
                                         console.error(`Failed to load image for ${manga.title}:`, manga.mangacover);
-                                        e.currentTarget.src ="https://i.pinimg.com/564x/2a/10/f7/2a10f7067f3ac4083beef3230d2e2f0c.jpg"; // Replace with your fallback image path
+                                        e.currentTarget.src ="https://t.ly/07XZy"; // Replace with your fallback image path
                                     }}
                                 />
                             </div>
